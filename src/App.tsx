@@ -1,5 +1,5 @@
 import { ConnectKitButton } from 'connectkit';
-import { Notifi } from './NotifiCard';
+import  Notifi from './NotifiCard';
 import { Profile } from './Profile';
 
 
