@@ -1,4 +1,8 @@
 import { ConnectKitButton } from 'connectkit';
+import { Notifi } from './NotifiCard';
+import { Profile } from './Profile';
+
+
 
 function App() {
   return (
@@ -10,7 +14,9 @@ function App() {
         height: '100vh',
       }}
     >
-      <ConnectKitButton />
+      {/* <ConnectKitButton /> */}
+      <Notifi/>
+      <Profile/>
     </div>
   );
 }

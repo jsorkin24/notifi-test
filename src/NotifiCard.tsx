@@ -46,7 +46,7 @@ export const Notifi: React.FC = () => {
 
   return (
     <NotifiContext
-      dappAddress="<YOUR OWN DAPP ADDRESS HERE>"
+      dappAddress="localhost:3000"
       // keep this "Production" unless you have a special Development environment set up by Notifi
       env="Production"
       signMessage={async (message: Uint8Array) => {
