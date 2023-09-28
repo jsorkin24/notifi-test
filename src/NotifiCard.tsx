@@ -1,19 +1,18 @@
-import { arrayify, hexlify } from "@ethersproject/bytes"
+import { arrayify } from "@ethersproject/bytes";
 import {
   NotifiContext,
   NotifiInputFieldsText,
   NotifiInputSeparators,
   NotifiSubscriptionCard,
-} from "@notifi-network/notifi-react-card"
-import "@notifi-network/notifi-react-card/dist/index.css"
-import { useEthers } from "@usedapp/core"
-import { providers } from "ethers"
-import React, { useMemo } from "react"
-import { useSignMessage } from "wagmi" // Import the useSignMessage hook from 'wagmi'
+} from "@notifi-network/notifi-react-card";
+import "@notifi-network/notifi-react-card/dist/index.css";
+import { useEthers } from "@usedapp/core";
+import React from "react";
+import { useAccount, useSignMessage } from "wagmi"; // Import the useAccount hook from 'wagmi'
 
 const Notifi: React.FC = () => {
-  const { account, library } = useEthers()
-  const { signMessage } = useSignMessage() // Use the signMessage function from 'wagmi'
+  const { address } = useAccount(); // Use the wallet address from useAccount hook
+  const { signMessage } = useSignMessage();
 
   const inputLabels: NotifiInputFieldsText = {
     label: {
@@ -24,7 +23,7 @@ const Notifi: React.FC = () => {
     placeholderText: {
       email: "Email",
     },
-  }
+  };
 
   const inputSeparators: NotifiInputSeparators = {
     smsSeparator: {
@@ -33,11 +32,11 @@ const Notifi: React.FC = () => {
     emailSeparator: {
       content: "OR",
     },
-  }
+  };
 
-  if (account === undefined) {
-    // Ensure account is defined
-    return null
+  if (address === undefined) {
+    // Ensure address is defined
+    return null;
   }
 
   return (
@@ -45,18 +44,15 @@ const Notifi: React.FC = () => {
       dappAddress="localhost:3000"
       env="Production"
       signMessage={async (message: Uint8Array) => {
-        // Use the signMessage function from 'wagmi' here
-        const result = await signMessage({ message: message })
+        const result = await signMessage({ message });
 
-        // Ensure result is a valid hexadecimal string
-        if (typeof result === "string" && /^0x[0-9A-Fa-f]*$/.test(result)) {
-          return arrayify(result)
+        if (typeof result === 'string' && /^0x[0-9A-Fa-f]*$/.test(result)) {
+          return arrayify(result);
         } else {
-          // Handle the case where result is not a valid hexadecimal string
-          throw new Error("Invalid signature format")
+          throw new Error('Invalid signature format');
         }
       }}
-      walletPublicKey={account}
+      walletPublicKey={address} // Set walletPublicKey to the wallet address
       walletBlockchain="ETHEREUM"
     >
       <NotifiSubscriptionCard
@@ -66,7 +62,7 @@ const Notifi: React.FC = () => {
         darkMode // Optional
       />
     </NotifiContext>
-  )
-}
+  );
+};
 
-export default Notifi
+export default Notifi;
