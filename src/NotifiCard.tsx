@@ -41,11 +41,10 @@ const Notifi: React.FC = () => {
 
   return (
     <NotifiContext
-      dappAddress="localhost:3000"
+      dappAddress="janedao123"
       env="Production"
       signMessage={async (message: Uint8Array) => {
         const result = await signMessage({ message });
-
         if (typeof result === 'string' && /^0x[0-9A-Fa-f]*$/.test(result)) {
           return arrayify(result);
         } else {
